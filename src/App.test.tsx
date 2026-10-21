@@ -15,6 +15,12 @@ function renderAt(path: string) {
 }
 
 describe('blog', () => {
+  it('marks only the current page in the navigation', () => {
+    renderAt('/posts')
+    expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('link', { name: 'Home' })).not.toHaveAttribute('aria-current')
+  })
+
   it('shows one card per post on the posts page', () => {
     renderAt('/posts')
     expect(screen.getAllByRole('article')).toHaveLength(posts.length)
